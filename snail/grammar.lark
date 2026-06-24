@@ -1,4 +1,4 @@
-%import common.SIGNED_INT
+%import common.SIGNED_NUMBER
 %import common.WS_INLINE
 
 %ignore WS_INLINE
@@ -12,7 +12,7 @@ _statement:  move_stmt _NL*
 
 init_stmt: "init" "(" range "," range ")"
 
-move_stmt: "move" "(" SIGNED_INT "," SIGNED_INT ")"
+move_stmt: "move" "(" SIGNED_NUMBER "," SIGNED_NUMBER ")"
 
 repeat_stmt: "repeat" ":" _NL _INDENT block _DEDENT
 
@@ -20,6 +20,6 @@ either_stmt: "either" ":" _NL _INDENT block _DEDENT "or" ":" _NL _INDENT block _
 
 block: _statement+
 
-range: "[" SIGNED_INT "," SIGNED_INT "]"
+range: "[" SIGNED_NUMBER "," SIGNED_NUMBER "]"
 
 _NL: (/\r?\n[\t ]*/)+

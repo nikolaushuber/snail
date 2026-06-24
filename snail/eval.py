@@ -4,7 +4,7 @@ import random
 
 State = Tuple[float, float]
 
-def _eval(n : Node, state : List[State], fuel : int = 5):
+def _eval(n : Node, state : List[State], fuel : int = 10):
     match n:
         case Program(init, stmts):
             x_range, y_range = init
@@ -19,17 +19,18 @@ def _eval(n : Node, state : List[State], fuel : int = 5):
 
         case Move(dx, dy):
             x, y = state[-1]
-            x_ = random.uniform(min(0, dx), max(0, dx))
-            y_ = random.uniform(min(0, dy), max(0, dy))
+            # x_ = random.uniform(min(0, dx), max(0, dx))
+            # y_ = random.uniform(min(0, dy), max(0, dy))
 
-            state += [(x + x_, y + y_)]
+            state += [(x + dx, y + dy)]
 
         case Repeat(body):
             for s in body:
                 _eval(s, state, fuel)
 
             if fuel > 0:
-                _eval(n, state, fuel-1)
+                if random.choice([True, False]):
+                    _eval(n, state, fuel-1)
 
         case Either(left, right):
             branch = left if random.choice([True, False]) else right

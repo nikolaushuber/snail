@@ -12,13 +12,13 @@ class Program(Node):
 
 @dataclass
 class Range(Node):
-    low: int
-    high: int
+    low: float
+    high: float
 
 @dataclass
 class Move(Node):
-    dx: int
-    dy: int
+    dx: float
+    dy: float
 
 @dataclass
 class Repeat(Node):

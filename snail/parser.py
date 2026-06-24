@@ -1,4 +1,4 @@
-from lark import Lark, Transformer
+from lark import Lark, Transformer, UnexpectedInput
 from lark.indenter import Indenter
 from .ast import *
 from pathlib import Path
@@ -14,8 +14,7 @@ class TreeIndenter(Indenter):
 
 # Transformer for Parsetree -> AST transformation
 class ASTTransformer(Transformer):
-    def SIGNED_INT(self, token):
-        return int(token)
+    SIGNED_NUMBER = float
     
     def range(self, items):
         return Range(items[0], items[1])
@@ -48,3 +47,18 @@ parser = Lark(
     postlex=TreeIndenter(),
     transformer=ASTTransformer()
 )
+
+def parse(source):
+    try:
+        tree = parser.parse(source)
+        return tree
+    except UnexpectedInput as e:
+        print(f"Syntax error at line {e.line}, column {e.column}")
+        print(e.get_context(source))
+
+        # Optional: show what was expected
+        if hasattr(e, "expected"):
+            expected = ", ".join(sorted(e.expected))
+            print(f"Expected one of: {expected}")
+
+        exit(1)

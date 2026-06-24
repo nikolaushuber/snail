@@ -18,7 +18,7 @@ flower_colors = [
 Trace = List[Tuple[float, float]]
 Garden = Tuple[float, float, float, float]
 
-def plot(traces : List[Trace], gardens : List[Garden], out):
+def plot(traces : List[Trace], gardens : List[Garden], filename : str, out):
     fig, ax = plt.subplots()
 
     for trace in traces:
@@ -58,6 +58,17 @@ def plot(traces : List[Trace], gardens : List[Garden], out):
         #     ax.add_patch(flower)
 
     ax.set_aspect('equal', adjustable='box')
+    ax.set_axisbelow(True)
+    ax.grid(True)
+
+    xmin, xmax = plt.xlim()
+    ymin, ymax = plt.ylim()
+
+    # Enforce minimum extent
+    plt.xlim(min(xmin, 0), max(xmax, 5))
+    plt.ylim(min(ymin, 0), max(ymax, 5))
+
+    fig.canvas.manager.set_window_title(filename)
 
     if out is not None:
         plt.savefig(out)

@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from .parser import parser
+from .parser import parse
 from .eval import eval
 from .pretty import pretty
 from .plot import plot
@@ -14,13 +14,14 @@ def main():
     cli.add_argument("--eval", action="store_true")
     cli.add_argument("--runs", type=int, default=1)
     cli.add_argument("--garden", default=None)
+    cli.add_argument("--fuel", type=int, default=10)
     cli.add_argument("--out", default=None)
 
     args = cli.parse_args()
 
     source = Path(args.file).read_text()
 
-    ast = parser.parse(source)
+    ast = parse(source)
 
     # parse gardens
     gardens = []
@@ -34,13 +35,13 @@ def main():
     if args.dump:
         print(pretty(ast))
     elif args.eval:
-        trace = eval(ast)
+        trace = eval(ast, args.fuel)
         
         for x, y in trace:
             print(f"({x:+.2f}, {y:+.2f})")
     else:
         traces = [eval(ast) for _ in range(0, args.runs)]
-        plot(traces, gardens, args.out)
+        plot(traces, gardens, args.file, args.out)
 
 
 if __name__ == '__main__':
