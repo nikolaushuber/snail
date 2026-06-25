@@ -18,7 +18,7 @@ flower_colors = [
 Trace = List[Tuple[float, float]]
 Garden = Tuple[float, float, float, float]
 
-def plot(traces : List[Trace], gardens : List[Garden], filename : str, out):
+def plot(traces : List[Trace], gardens : List[Garden], flowers : bool, filename : str, out):
     fig, ax = plt.subplots()
 
     for trace in traces:
@@ -45,17 +45,23 @@ def plot(traces : List[Trace], gardens : List[Garden], filename : str, out):
         )
         ax.add_patch(rect)
 
-        # area = dx * dy
-        # density = 1.5
-        # num_flowers = int(area * density)
+        if flowers:
+            area = dx * dy
+            density = 1.5
+            num_flowers = int(area * density)
 
-        # for _ in range(num_flowers):
-        #     flower_x = random.uniform(x, x + dx)
-        #     flower_y = random.uniform(y, y + dy)
+            for _ in range(num_flowers):
+                flower_x = random.uniform(x, x + dx)
+                flower_y = random.uniform(y, y + dy)
 
-        #     r = random.uniform(0.05, 0.25)
-        #     flower = patches.Circle((flower_x, flower_y), r, color=random.choice(flower_colors), alpha=0.85)
-        #     ax.add_patch(flower)
+                r = random.uniform(0.05, 0.25)
+                flower = patches.Circle(
+                    (flower_x, flower_y), 
+                    r,
+                    color=random.choice(flower_colors), 
+                    alpha=0.65
+                )
+                ax.add_patch(flower)
 
     ax.set_aspect('equal', adjustable='box')
     ax.set_axisbelow(True)

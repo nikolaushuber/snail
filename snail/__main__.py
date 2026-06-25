@@ -15,6 +15,7 @@ def main():
     cli.add_argument("--runs", type=int, default=1)
     cli.add_argument("--garden", default=None)
     cli.add_argument("--fuel", type=int, default=10)
+    cli.add_argument("--flowers", action="store_true")
     cli.add_argument("--out", default=None)
 
     args = cli.parse_args()
@@ -41,7 +42,7 @@ def main():
             print(f"({x:+.2f}, {y:+.2f})")
     else:
         traces = [eval(ast) for _ in range(0, args.runs)]
-        plot(traces, gardens, args.file, args.out)
+        plot(traces, gardens, args.flowers, args.file, args.out)
 
 
 if __name__ == '__main__':
