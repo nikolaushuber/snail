@@ -77,6 +77,12 @@ snail examples/ex1.snail --runs 10 --garden examples/g1.garden
 The format for describing gardens is simple. Each garden consists of a 4-tuple describing `origin_x, origin_y, width, height`.
 See `examples/g1.garden` for an example.
 
+And if you want your garden to be fancy, you can try:
+
+```bash
+snail examples/ex1.snail --runs 10 --garden examples/g1.garden --flowers
+```
+
 ## License
 
 MIT
