@@ -59,7 +59,9 @@ def plot(traces : List[Trace], gardens : List[Garden], flowers : bool, filename 
                     (flower_x, flower_y), 
                     r,
                     color=random.choice(flower_colors), 
-                    alpha=0.65
+                    alpha=0.45,
+                    hatch='OO',
+                    linestyle=':'
                 )
                 ax.add_patch(flower)
 
